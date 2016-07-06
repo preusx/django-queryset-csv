@@ -148,7 +148,7 @@ def generate_filename(queryset, append_datestamp=False):
     Takes a queryset and returns a default
     base filename based on the underlying model
     """
-    base_filename = slugify(unicode(queryset.model.__name__)) + '_export.csv'
+    base_filename = slugify(_safe_utf8_stringify(queryset.model.__name__)) + '_export.csv'
 
     if append_datestamp:
         base_filename = _append_datestamp(base_filename)
