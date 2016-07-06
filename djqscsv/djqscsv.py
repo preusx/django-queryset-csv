@@ -1,5 +1,6 @@
 import csv
 import datetime
+import sys
 
 from django.core.exceptions import ValidationError
 from django.utils.text import slugify
@@ -172,12 +173,10 @@ def _validate_and_clean_filename(filename):
 
 
 def _safe_utf8_stringify(value):
-    if isinstance(value, str):
-        return value
-    elif isinstance(value, unicode):
-        return value.encode('utf-8')
+    if sys.version_info >= (3,0):
+        return str(value)
     else:
-        return unicode(value).encode('utf-8')
+        return unicode(value)
 
 
 def _sanitize_unicode_record(field_serializer_map, record):
